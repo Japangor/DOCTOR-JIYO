@@ -151,17 +151,19 @@ class MyCourses with ChangeNotifier {
 
   List<MyCourse> buildappoint(List extractedData) {
     final List<MyCourse> loadedCourses = [];
+    List<String> tokenID;
     extractedData.forEach((courseData) {
-      loadedCourses.add(MyCourse(
-        recordname: courseData['Tokens'][loadedCourses.length]['BookingDate'],
-        recordcat: courseData['Tokens'][loadedCourses.length]['EstimateTime'],
-        recordnotes: courseData['Tokens'][loadedCourses.length]
-            ['DispensaryName'],
-        time: courseData['CreatedAt'],
-        file: courseData['FilePath'],
-      ));
-      // print(catData['name']);
+      for (int a = 0; a < 15; a++) {
+        //print(courseData['Tokens'][a]['TokenBookingID'].toString());
+        loadedCourses.add(MyCourse(
+          recordname: courseData['Tokens'][a]['DispensaryName'].toString(),
+          recordcat: courseData['Tokens'][a]['EstimateTime'].toString(),
+          recordnotes: courseData['Tokens'][a]['BookingDate'].toString(),
+        ));
+      }
+      //print(tokenID);
     });
+
     return loadedCourses;
   }
 
