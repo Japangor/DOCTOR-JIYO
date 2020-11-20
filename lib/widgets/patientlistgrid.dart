@@ -4,11 +4,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../constants.dart';
 import '../widgets/star_display_widget.dart';
 import '../screens/patientlistattend.dart';
-import '../models/my_course.dart';
+import '../models/model.dart';
 import '../widgets/custom_text.dart';
 
 class patientlistgrid extends StatelessWidget {
-  final MyCourse myCourse;
+  final fetchdataa myCourse;
 
   patientlistgrid({
     @required this.myCourse,

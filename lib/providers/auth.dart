@@ -1,5 +1,5 @@
-import 'package:doctor/screens/attendant.dart';
-import 'package:doctor/screens/patient.dart';
+import 'package:doctor/screens/attendantmain.dart';
+import 'package:doctor/screens/patientmain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +177,7 @@ class Auth with ChangeNotifier {
     // _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 
-  Future<void> getUserInfo() async {
+  Future<void> getpatientinfo() async {
     var url = BASE_URL + '/PatientProfileApi?PatientID=' + _user.userId;
     try {
       if (token == null) {
@@ -200,7 +200,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> getUserInfo2() async {
+  Future<void> getdoctorinfo() async {
     var url = BASE_URL + '/DoctorProfileAPI?DoctorID=' + _user.userId;
     try {
       if (token == null) {
@@ -222,7 +222,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> getUserInfo3() async {
+  Future<void> getattendantinfo() async {
     var url = BASE_URL + '/AttendantProfileAPI?AttendantId=' + _user.userId;
     try {
       if (token == null) {
@@ -349,8 +349,32 @@ class Auth with ChangeNotifier {
       );
 
       final responseData = json.decode(response.body);
-      if (responseData['status'] == 'failed') {
+      if (responseData['success'] == 'failed') {
         throw HttpException('Password update Failed');
+      }
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<void> register(
+      String pname, String cnumber, String email, String password) async {
+    final url = BASE_URL + '/RegisterAPI';
+    try {
+      final response = await http.post(
+        url,
+        body: {
+          'PatientName': pname,
+          'ContactNumber': cnumber,
+          'Email': email,
+          'Password': password,
+        },
+      );
+
+      final responseData = json.decode(response.body);
+      print(responseData);
+      if (responseData['success'] == 'failed') {
+        throw HttpException('Register update Failed');
       }
     } catch (error) {
       throw (error);

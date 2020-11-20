@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../providers/courses.dart';
-import '../widgets/course_list_item.dart';
+import '../providers/prescription.dart';
 
 class CoursesScreen extends StatefulWidget {
   static const routeName = '/courses';
@@ -47,7 +46,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final courseData = Provider.of<Courses>(context, listen: false).items;
+    final courseData = Provider.of<prescription>(context, listen: false).items;
     final courseCount = courseData.length;
     return Scaffold(
       appBar: AppBar(

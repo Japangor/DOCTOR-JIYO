@@ -4,11 +4,11 @@ import '../widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../widgets/star_display_widget.dart';
-import '../models/course.dart';
+import '../models/prescription.dart';
 import '../widgets/youtube_player_widget.dart';
 
 class CourseDetailHeader extends StatelessWidget {
-  final Course loadedCourse;
+  final Prescription loadedCourse;
   CourseDetailHeader({@required this.loadedCourse});
 
   void _showYoutubeModal(BuildContext ctx) {

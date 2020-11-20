@@ -10,7 +10,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Provider.of<Auth>(context, listen: false).token2 == 'patient') {
       return FutureBuilder(
-        future: Provider.of<Auth>(context, listen: false).getUserInfo(),
+        future: Provider.of<Auth>(context, listen: false).getpatientinfo(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -36,6 +36,7 @@ class AccountScreen extends StatelessWidget {
                         ),
                         CircleAvatar(
                           radius: 50,
+                          backgroundImage: NetworkImage(user.image),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10),
@@ -104,7 +105,7 @@ class AccountScreen extends StatelessWidget {
       );
     } else if (Provider.of<Auth>(context, listen: false).token2 == 'doctor') {
       return FutureBuilder(
-        future: Provider.of<Auth>(context, listen: false).getUserInfo2(),
+        future: Provider.of<Auth>(context, listen: false).getdoctorinfo(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -200,7 +201,7 @@ class AccountScreen extends StatelessWidget {
     } else if (Provider.of<Auth>(context, listen: false).token2 ==
         'attendant') {
       return FutureBuilder(
-        future: Provider.of<Auth>(context, listen: false).getUserInfo3(),
+        future: Provider.of<Auth>(context, listen: false).getattendantinfo(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(

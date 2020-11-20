@@ -1,27 +1,25 @@
 import 'package:doctor/screens/addrecord.dart';
-import 'package:doctor/screens/patient.dart';
+import 'package:doctor/screens/intro.dart';
+import 'package:doctor/screens/patientmain.dart';
 import 'package:doctor/screens/patientdetails.dart';
 import 'package:doctor/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './providers/auth.dart';
-import './providers/categories.dart';
-import './providers/courses.dart';
+import './providers/prescription.dart';
 import './screens/auth_screen.dart';
 import './screens/login_screen.dart';
 import './constants.dart';
 import './screens/webview_screen.dart';
-import './screens/tabs_screen.dart';
+import './screens/doctormain.dart';
 import './screens/courses_screen.dart';
-import './screens/course_detail_screen.dart';
 import './screens/edit_profile_screen.dart';
 import './screens/edit_password_screen.dart';
 import './screens/my_course_detail_screen.dart';
 import './screens/webview_screen_iframe.dart';
 import './screens/temp_view_screen.dart';
-import './providers/misc_provider.dart';
-import './providers/my_courses.dart';
-import 'package:doctor/screens/attendant.dart';
+import './providers/fetch.dart';
+import 'package:doctor/screens/attendantmain.dart';
 
 void main() {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -40,26 +38,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Categories(),
-        ),
-        ChangeNotifierProxyProvider<Auth, Courses>(
-          create: (ctx) => Courses(null, [], []),
-          update: (ctx, auth, prevoiusCourses) => Courses(
+        ChangeNotifierProxyProvider<Auth, prescription>(
+          create: (ctx) => prescription(null, [], []),
+          update: (ctx, auth, prevoiusCourses) => prescription(
             auth.token,
             prevoiusCourses == null ? [] : prevoiusCourses.items,
             prevoiusCourses == null ? [] : prevoiusCourses.topItems,
           ),
         ),
-        ChangeNotifierProxyProvider<Auth, MyCourses>(
-          create: (ctx) => MyCourses(null, []),
-          update: (ctx, auth, previousMyCourses) => MyCourses(
+        ChangeNotifierProxyProvider<Auth, fetchdata>(
+          create: (ctx) => fetchdata(null, []),
+          update: (ctx, auth, previousMyCourses) => fetchdata(
             auth.token,
             previousMyCourses == null ? [] : previousMyCourses.items,
           ),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => Languages(),
         ),
       ],
       child: Consumer<Auth>(
@@ -89,13 +81,13 @@ class MyApp extends StatelessWidget {
                     '/attendant': (ctx) => attendant(),
                     '/splash': (ctx) => splash(),
                     '/addrecord': (ctx) => addrecord(),
+                    '/intro': (ctx) => OnboardingScreen(),
                     AuthScreen.routeName: (ctx) => AuthScreen(),
                     LoginScreen.routeName: (ctx) => LoginScreen(),
                     WebviewScreen.routeName: (ctx) => WebviewScreen(),
                     WebviewScreenIframe.routeName: (ctx) =>
                         WebviewScreenIframe(),
                     CoursesScreen.routeName: (ctx) => CoursesScreen(),
-                    CourseDetailScreen.routeName: (ctx) => CourseDetailScreen(),
                     EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
                     EditPasswordScreen.routeName: (ctx) => EditPasswordScreen(),
                     patientdetails.routeName: (ctx) => patientdetails(),

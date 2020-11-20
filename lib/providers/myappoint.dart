@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/http_exception.dart';
 import 'dart:convert';
-import '../models/my_course.dart';
+import '../models/model.dart';
 import '../constants.dart';
-import '../models/course_detail.dart';
 import '../models/section.dart';
 
 class MyCourses with ChangeNotifier {
-  List<MyCourse> _items = [];
+  List<fetchdataa> _items = [];
   List<Section> _sectionItems = [];
   final String authToken;
 
   MyCourses(this.authToken, this._items);
 
-  List<MyCourse> get items {
+  List<fetchdataa> get items {
     return [..._items];
   }
 
@@ -26,8 +25,8 @@ class MyCourses with ChangeNotifier {
     return _items.length;
   }
 
-  MyCourse findById(int id) {
-    return _items.firstWhere((myCourse) => myCourse.id == id);
+  fetchdataa findById(int id) {
+    return _items.firstWhere((fetchdataa) => fetchdataa.id == id);
   }
 
   Future<void> fetchMyCourses() async {
@@ -47,10 +46,10 @@ class MyCourses with ChangeNotifier {
     }
   }
 
-  List<MyCourse> buildMyCourseList(List extractedData) {
-    final List<MyCourse> loadedCourses = [];
+  List<fetchdataa> buildMyCourseList(List extractedData) {
+    final List<fetchdataa> loadedCourses = [];
     extractedData.forEach((courseData) {
-      loadedCourses.add(MyCourse(
+      loadedCourses.add(fetchdataa(
         id: courseData['PatientID'],
         patientname: courseData['PatientName'],
         thumbnail: courseData['ImgPath'],

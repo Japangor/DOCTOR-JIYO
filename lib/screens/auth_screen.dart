@@ -1,3 +1,5 @@
+import 'package:doctor/screens/Register.dart';
+
 import '../models/common_functions.dart';
 import './webview_screen.dart';
 import 'package:flutter/material.dart';
@@ -216,10 +218,9 @@ class _AuthCardState extends State<AuthCard> {
                     'Create Account',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () {
-                    final _url = BASE_URL + '/home/sign_up';
-                    Navigator.of(context)
-                        .pushNamed(WebviewScreen.routeName, arguments: _url);
+                  onPressed: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => register()))
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),

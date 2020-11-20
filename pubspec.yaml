@@ -25,6 +25,9 @@ dependencies:
     sdk: flutter
   provider: ^4.3.0
   awesome_card: 1.1.0
+  intro_slider:
+
+
   intl: ^0.15.8
   http: ^0.12.1
   shared_preferences: ^0.5.8

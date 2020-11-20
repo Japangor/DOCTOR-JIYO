@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../constants.dart';
-import '../providers/my_courses.dart';
+import '../providers/fetch.dart';
 import '../widgets/appointgrid.dart.dart';
 
 class MyCoursesScreen2 extends StatelessWidget {
@@ -52,7 +52,7 @@ class MyCoursesScreen2 extends StatelessWidget {
           ),
           FutureBuilder(
             future:
-                Provider.of<MyCourses>(context, listen: false).fetchrecords(),
+                Provider.of<fetchdata>(context, listen: false).fetchrecords(),
             builder: (ctx, dataSnapshot) {
               if (dataSnapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -65,7 +65,7 @@ class MyCoursesScreen2 extends StatelessWidget {
                     child: Text('Error Occured'),
                   );
                 } else {
-                  return Consumer<MyCourses>(
+                  return Consumer<fetchdata>(
                     builder: (context, myCourseData, child) =>
                         StaggeredGridView.countBuilder(
                       padding: const EdgeInsets.all(10.0),

@@ -6,7 +6,7 @@ import '../widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../widgets/star_display_widget.dart';
-import '../models/my_course.dart';
+import '../models/model.dart';
 import '../widgets/youtube_player_widget.dart';
 import '../screens/courses_screen.dart';
 
@@ -16,7 +16,7 @@ class MyCourseDetailHeader extends StatelessWidget {
   final String thumbnail;
   final int rating;
   final String price;
-  final MyCourse loadedCourse;
+  final fetchdataa loadedCourse;
 
   MyCourseDetailHeader(
       {@required this.id,

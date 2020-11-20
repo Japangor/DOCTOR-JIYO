@@ -1,10 +1,7 @@
-import 'package:doctor/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
-import '../providers/misc_provider.dart';
-import '../providers/courses.dart';
-import '../providers/categories.dart';
+import '../providers/prescription.dart';
 import './custom_text.dart';
 import './star_display_widget.dart';
 import '../screens/courses_screen.dart';
@@ -36,12 +33,6 @@ class _FilterWidgetState extends State<FilterWidget> {
     if (_isInit) {
       setState(() {
         _isLoading = true;
-      });
-
-      Provider.of<Languages>(context).fetchLanguages().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
       });
     }
     _isInit = false;
@@ -89,12 +80,8 @@ class _FilterWidgetState extends State<FilterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final catData = Provider.of<Categories>(context, listen: false).items;
-    catData.insert(0,
-        Category(id: 0, title: 'All', thumbnail: null, numberOfCourses: null));
     //print(catData);
-    final langData = Provider.of<Languages>(context, listen: false).items;
-    langData.insert(0, Language(id: 0, value: 'all', displayedValue: 'All'));
+
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
@@ -157,13 +144,6 @@ class _FilterWidgetState extends State<FilterWidget> {
                                   });
                                 },
                                 isExpanded: true,
-                                items: catData.map((cd) {
-                                  return DropdownMenuItem(
-                                    value:
-                                        cd.id == 0 ? 'all' : cd.id.toString(),
-                                    child: Text(cd.title),
-                                  );
-                                }).toList(),
                               ),
                             ),
                           ],
@@ -189,12 +169,6 @@ class _FilterWidgetState extends State<FilterWidget> {
                                   });
                                 },
                                 isExpanded: true,
-                                items: PriceFilter.getPriceFilter().map((pf) {
-                                  return DropdownMenuItem(
-                                    value: pf.id,
-                                    child: Text(pf.name),
-                                  );
-                                }).toList(),
                               ),
                             ),
                           ],
@@ -220,13 +194,6 @@ class _FilterWidgetState extends State<FilterWidget> {
                                   });
                                 },
                                 isExpanded: true,
-                                items: DifficultyLevel.getDifficultyLevel()
-                                    .map((dl) {
-                                  return DropdownMenuItem(
-                                    value: dl.id,
-                                    child: Text(dl.name),
-                                  );
-                                }).toList(),
                               ),
                             ),
                           ],
@@ -252,12 +219,6 @@ class _FilterWidgetState extends State<FilterWidget> {
                                   });
                                 },
                                 isExpanded: true,
-                                items: langData.map((ld) {
-                                  return DropdownMenuItem(
-                                    value: ld.value,
-                                    child: Text(ld.displayedValue),
-                                  );
-                                }).toList(),
                               ),
                             ),
                           ],

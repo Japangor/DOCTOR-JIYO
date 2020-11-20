@@ -1,27 +1,23 @@
-import 'package:doctor/screens/appointscreen.dart';
+import 'package:doctor/screens/patientdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './home_screen.dart';
 import './login_screen.dart';
 import '../constants.dart';
 import '../screens/courses_screen.dart';
-import '../screens/my_courses_screen.dart';
+import '../screens/patientlistattend.dart';
 import '../screens/my_wishlist_screen.dart';
 import '../screens/account_screen.dart';
-import '../screens/my_wishlist_screen.dart';
-
 import '../widgets/filter_widget.dart';
 import '../providers/auth.dart';
 
-class patient extends StatefulWidget {
+class TabsScreen extends StatefulWidget {
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
 
-class _TabsScreenState extends State<patient> {
+class _TabsScreenState extends State<TabsScreen> {
   List<Widget> _pages = [
-    LoginScreen(),
-    LoginScreen(),
     LoginScreen(),
     LoginScreen(),
   ];
@@ -49,9 +45,7 @@ class _TabsScreenState extends State<patient> {
 
       if (_isAuth) {
         _pages = [
-          MyCoursesScreen(),
-          MyCoursesScreen2(),
-          MyWishlistScreen(),
+          Patientlist(),
           AccountScreen(),
         ];
       }
@@ -105,10 +99,17 @@ class _TabsScreenState extends State<patient> {
                 height: 32,
               )
             : TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Search Here',
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                ),
                 controller: searchController,
                 onFieldSubmitted: _handleSubmitted,
               ),
-        backgroundColor: kBackgroundColor,
+        backgroundColor: Colors.lightBlue,
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -122,6 +123,74 @@ class _TabsScreenState extends State<patient> {
               }),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            FutureBuilder(
+              future: Provider.of<Auth>(context, listen: false).getdoctorinfo(),
+              builder: (ctx, dataSnapshot) {
+                if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  if (dataSnapshot.error != null) {
+                    //error
+                    return Center(
+                      child: Text('Error Occured'),
+                    );
+                  } else {
+                    return Consumer<Auth>(builder: (context, authData, child) {
+                      final user = authData.user;
+                      return SingleChildScrollView(
+                        child: Container(
+                          width: double.infinity,
+                          child: UserAccountsDrawerHeader(
+                            accountName: Text(user.firstName),
+                            accountEmail: Text(""),
+                            currentAccountPicture: CircleAvatar(
+                              backgroundColor: Theme.of(context).platform ==
+                                      TargetPlatform.iOS
+                                  ? Colors.blue
+                                  : Colors.white,
+                              child: CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(user.image),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+                  }
+                }
+              },
+            ),
+            ListTile(
+                title: Text("Appointments"),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  AccountScreen();
+                }),
+            ListTile(
+              title: Text("Records"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Presciptions"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Health Articles"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Accounts"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+          ],
+        ),
+      ),
       body: _pages[_selectedPageIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showFilterModal(context),
@@ -134,17 +203,7 @@ class _TabsScreenState extends State<patient> {
           BottomNavigationBarItem(
             backgroundColor: kBackgroundColor,
             icon: Icon(Icons.school),
-            title: Text('Appointments'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: kBackgroundColor,
-            icon: Icon(Icons.shopping_basket),
-            title: Text('Record'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: kBackgroundColor,
-            icon: Icon(Icons.favorite_border),
-            title: Text('Prescription'),
+            title: Text('Patient List'),
           ),
           BottomNavigationBarItem(
             backgroundColor: kBackgroundColor,

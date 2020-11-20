@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../models/my_course.dart';
+import '../models/model.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -21,7 +21,7 @@ class presdetail extends StatefulWidget {
 
 class HomePageState extends State<presdetail> {
   final int id;
-  final MyCourse loadedCourse;
+  final fetchdataa loadedCourse;
 
   HomePageState({@required this.id, this.loadedCourse});
   List data;

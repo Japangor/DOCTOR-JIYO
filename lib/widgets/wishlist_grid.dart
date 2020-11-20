@@ -2,16 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/courses.dart';
+import '../providers/prescription.dart';
 import '../constants.dart';
-import '../screens/course_detail_screen.dart';
-import '../models/course.dart';
+import '../models/prescription.dart';
 import '../widgets/custom_text.dart';
 import '../models/common_functions.dart';
 import 'package:http/http.dart' as http;
 
 class WishlistGrid extends StatelessWidget {
-  final Course course;
+  final Prescription course;
 
   WishlistGrid({
     @required this.course,

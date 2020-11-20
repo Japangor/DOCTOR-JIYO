@@ -3,11 +3,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../constants.dart';
 import '../widgets/star_display_widget.dart';
 import '../screens/my_course_detail_screen.dart';
-import '../models/my_course.dart';
+import '../models/model.dart';
 import '../widgets/custom_text.dart';
 
 class MyCoureGrid2 extends StatelessWidget {
-  final MyCourse myCourse;
+  final fetchdataa myCourse;
 
   MyCoureGrid2({
     @required this.myCourse,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class MyCourse {
+class fetchdataa {
   int id;
   String patientname;
   String thumbnail;
@@ -25,7 +25,7 @@ class MyCourse {
   String time;
   String file;
 
-  MyCourse({
+  fetchdataa({
     @required this.id,
     @required this.patientname,
     @required this.thumbnail,

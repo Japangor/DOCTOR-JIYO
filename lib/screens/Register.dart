@@ -1,44 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
 import '../constants.dart';
 import '../widgets/custom_text.dart';
 import 'dart:io';
 import '../models/common_functions.dart';
-import 'package:intl/intl.dart';
-import 'package:image_picker/image_picker.dart';
 
-class addrecord extends StatefulWidget {
-  static const routeName = '/addrecord';
+class register extends StatefulWidget {
+  static const routeName = '/register';
   @override
   _EditPasswordScreenState createState() => _EditPasswordScreenState();
 }
 
-var now = new DateTime.now();
-var formatter = new DateFormat('yyyy-MM-dd');
-String formattedDate = formatter.format(now);
-
-class _EditPasswordScreenState extends State<addrecord> {
-  String _filePath;
-  File _image;
-  void open_gallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
-    print(_image);
-  }
-
+class _EditPasswordScreenState extends State<register> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   var _isLoading = false;
   Map<String, String> _passwordData = {
-    'RecordName': '',
-    'Notes': '',
-    'RecordCatName': '',
-    'PrescriptionID': '',
-    'CreatedAt': '',
-    'FilePath': ''
+    'PatientName': '',
+    'ContactNumber': '',
+    'Email': '',
+    'Password': ''
   };
   final _passwordController = TextEditingController();
 
@@ -52,14 +33,11 @@ class _EditPasswordScreenState extends State<addrecord> {
       _isLoading = true;
     });
     try {
-      await Provider.of<Auth>(context, listen: false).uploadrecord(
-        _passwordData['RecordName'],
-        _passwordData['Notes'],
-        _passwordData['RecordCatName'],
-        _passwordData['PrescriptionID'],
-        _passwordData['CreatedAt'],
-        _passwordData['FilePath'],
-      );
+      await Provider.of<Auth>(context, listen: false).register(
+          _passwordData['PatientName'],
+          _passwordData['ContactNumber'],
+          _passwordData['Email'],
+          _passwordData['Password']);
 
       CommonFunctions.showSuccessToast('Password updated Successfully');
     } catch (error) {
@@ -112,7 +90,7 @@ class _EditPasswordScreenState extends State<addrecord> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Customtext(
-                  text: 'Update Record',
+                  text: 'Register',
                   colors: kTextColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -143,13 +121,13 @@ class _EditPasswordScreenState extends State<addrecord> {
                               }
                             },
                             onSaved: (value) {
-                              _passwordData['RecordName'] = value;
+                              _passwordData['PatientName'] = value;
                             },
                           ),
                           TextFormField(
                             style: TextStyle(fontSize: 16),
                             decoration: getInputDecoration(
-                              'Notes',
+                              'Number',
                               Icons.vpn_key,
                             ),
                             validator: (value) {
@@ -158,7 +136,7 @@ class _EditPasswordScreenState extends State<addrecord> {
                               }
                             },
                             onSaved: (value) {
-                              _passwordData['Notes'] = value;
+                              _passwordData['ContactNumber'] = value;
                             },
                           ),
                           SizedBox(
@@ -167,12 +145,12 @@ class _EditPasswordScreenState extends State<addrecord> {
                           TextFormField(
                             style: TextStyle(fontSize: 16),
                             decoration: getInputDecoration(
-                              'Category',
+                              'Email',
                               Icons.vpn_key,
                             ),
                             controller: _passwordController,
                             onSaved: (value) {
-                              _passwordData['RecordCatName'] = value;
+                              _passwordData['Email'] = value;
                             },
                           ),
                           SizedBox(
@@ -181,45 +159,27 @@ class _EditPasswordScreenState extends State<addrecord> {
                           TextFormField(
                             style: TextStyle(fontSize: 16),
                             decoration: getInputDecoration(
-                              'PrescriptionID',
+                              'Password',
                               Icons.vpn_key,
                             ),
-                            onSaved: (value) {
-                              _passwordData['PrescriptionID'] = value;
+                            validator: (value) {
+                              if (value.isEmpty || value.length < 4) {
+                                return 'Password is too short!';
+                              }
                             },
-                          ),
-                          TextFormField(
-                            initialValue: formattedDate,
-                            style: TextStyle(fontSize: 16),
-                            onSaved: (formattedDate) {
-                              _passwordData['CreatedAt'] = formattedDate;
+                            onSaved: (value) {
+                              _passwordData['Password'] = value;
                             },
                           ),
                           SizedBox(
                             height: 15,
-                          ),
-                          RaisedButton(
-                            onPressed: open_gallery,
-                            child: Text(
-                              'Choose Image',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            color: kBlueColor,
-                            textColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 15),
-                            splashColor: Colors.blueAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7.0),
-                              side: BorderSide(color: kBlueColor),
-                            ),
                           ),
                           SizedBox(
                             width: double.infinity,
                             child: RaisedButton(
                               onPressed: _submit,
                               child: Text(
-                                'UPDATE',
+                                'Register',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               color: kBlueColor,

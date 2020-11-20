@@ -1,23 +1,23 @@
 import 'dart:async';
 import 'package:doctor/screens/addrecord.dart';
 import 'package:doctor/screens/auth_screen.dart';
-import 'package:doctor/screens/course_detail_screen.dart';
 import 'package:doctor/screens/courses_screen.dart';
 import 'package:doctor/screens/edit_password_screen.dart';
 import 'package:doctor/screens/edit_profile_screen.dart';
+import 'package:doctor/screens/intro.dart';
 import 'package:doctor/screens/login_screen.dart';
-import 'package:doctor/screens/tabs_screen.dart';
+import 'package:doctor/screens/doctormain.dart';
 import 'package:doctor/screens/temp_view_screen.dart';
 import 'package:doctor/screens/webview_screen.dart';
 import 'package:doctor/screens/webview_screen_iframe.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'package:doctor/screens/patient.dart';
+import 'package:doctor/screens/patientmain.dart';
 import 'package:doctor/screens/patientdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:doctor/providers/auth.dart';
-import 'package:doctor/screens/attendant.dart';
+import 'package:doctor/screens/attendantmain.dart';
 
 void main() {
   runApp(splash());
@@ -37,12 +37,12 @@ class splash extends StatelessWidget {
         '/attendant': (ctx) => attendant(),
         '/splash': (ctx) => splash(),
         '/addrecord': (ctx) => addrecord(),
+        '/intro': (ctx) => OnboardingScreen(),
         AuthScreen.routeName: (ctx) => AuthScreen(),
         LoginScreen.routeName: (ctx) => LoginScreen(),
         WebviewScreen.routeName: (ctx) => WebviewScreen(),
         WebviewScreenIframe.routeName: (ctx) => WebviewScreenIframe(),
         CoursesScreen.routeName: (ctx) => CoursesScreen(),
-        CourseDetailScreen.routeName: (ctx) => CourseDetailScreen(),
         EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
         EditPasswordScreen.routeName: (ctx) => EditPasswordScreen(),
         patientdetails.routeName: (ctx) => patientdetails(),
@@ -76,7 +76,9 @@ class Splash2 extends StatelessWidget {
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<Auth>(context, listen: false).token2 == 'doctor') {
+    if (Provider.of<Auth>(context, listen: false).token == null) {
+      return OnboardingScreen();
+    } else if (Provider.of<Auth>(context, listen: false).token2 == 'doctor') {
       return TabsScreen();
     } else if (Provider.of<Auth>(context, listen: false).token2 == 'patient') {
       return patient();

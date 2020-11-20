@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../constants.dart';
-import '../providers/courses.dart';
+import '../providers/prescription.dart';
 import '../widgets/wishlist_grid.dart';
 
 class MyWishlistScreen extends StatelessWidget {
@@ -25,8 +25,8 @@ class MyWishlistScreen extends StatelessWidget {
             ),
           ),
           FutureBuilder(
-            future:
-                Provider.of<Courses>(context, listen: false).fetchMyWishlist(),
+            future: Provider.of<prescription>(context, listen: false)
+                .fetchprescription(),
             builder: (ctx, dataSnapshot) {
               if (dataSnapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -39,7 +39,7 @@ class MyWishlistScreen extends StatelessWidget {
                     child: Text('Error Occured'),
                   );
                 } else {
-                  return Consumer<Courses>(
+                  return Consumer<prescription>(
                     builder: (context, courseData, child) =>
                         StaggeredGridView.countBuilder(
                       padding: const EdgeInsets.all(10.0),

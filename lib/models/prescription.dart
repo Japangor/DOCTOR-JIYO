@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class Course {
+class Prescription {
   int PrescriptionID;
   String prespatname;
   String doctorname;
@@ -10,7 +10,7 @@ class Course {
 
   String Diagnosis;
 
-  Course({
+  Prescription({
     @required this.PrescriptionID,
     @required this.prespatname,
     @required this.presdate,

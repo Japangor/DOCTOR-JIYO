@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share/share.dart';
-import '../providers/my_courses.dart';
+import '../providers/fetch.dart';
 import '../widgets/video_player_widget.dart';
 import '../widgets/my_course_header.dart';
 import '../widgets/custom_text.dart';
 import '../constants.dart';
 import '../models/common_functions.dart';
-import '../screens/course_detail_screen.dart';
 import '../widgets/my_course_detail_header.dart';
 import '../widgets/youtube_player_widget.dart';
 import '../screens/webview_screen.dart';
 import '../screens/webview_screen_iframe.dart';
 import '../screens/temp_view_screen.dart';
-import '../models/my_course.dart';
+import '../models/model.dart';
 
 class patientdetails extends StatefulWidget {
   static const routeName = '/patientdetails';
@@ -26,7 +25,7 @@ class _MyCourseDetailScreenState extends State<patientdetails> {
   var _isInit = true;
   var _isAuth = false;
   var _isLoading = false;
-  final MyCourse loadedCourse;
+  final fetchdataa loadedCourse;
   _MyCourseDetailScreenState({@required this.loadedCourse});
   @override
   void initState() {
@@ -41,11 +40,11 @@ class _MyCourseDetailScreenState extends State<patientdetails> {
       });
       final myCourseId = ModalRoute.of(context).settings.arguments as int;
 
-      Provider.of<MyCourses>(context, listen: false)
+      Provider.of<fetchdata>(context, listen: false)
           .fetchCourseSections(myCourseId)
           .then((_) {
         final activeSections =
-            Provider.of<MyCourses>(context, listen: false).sectionitems;
+            Provider.of<fetchdata>(context, listen: false).sectionitems;
         setState(() {
           _isLoading = false;
         });
@@ -59,9 +58,9 @@ class _MyCourseDetailScreenState extends State<patientdetails> {
   Widget build(BuildContext context) {
     final myCourseId = ModalRoute.of(context).settings.arguments as int;
     final myLoadedCourse =
-        Provider.of<MyCourses>(context, listen: false).findById(myCourseId);
+        Provider.of<fetchdata>(context, listen: false).findById(myCourseId);
     final sections =
-        Provider.of<MyCourses>(context, listen: false).sectionitems;
+        Provider.of<fetchdata>(context, listen: false).sectionitems;
     var lessonCount = 0;
     return Scaffold(
         appBar: PreferredSize(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/course_grid.dart';
-import '../widgets/category_list_item.dart';
-import '../providers/categories.dart';
-import '../providers/courses.dart';
+import '../providers/prescription.dart';
 import '../constants.dart';
 import '../screens/courses_screen.dart';
 import '../models/common_functions.dart';
@@ -40,35 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
-
-      Provider.of<Categories>(context).fetchCategories().then((_) {
-        setState(() {
-          _isLoading = false;
-          catData = Provider.of<Categories>(context, listen: false).items;
-        });
-      });
-
-
     }
     _isInit = false;
     super.didChangeDependencies();
-  }
-
-  Future<Null> refreshList() async {
-    try {
-      await Provider.of<Categories>(context, listen: false).fetchCategories();
-
-      setState(() {
-        catData = Provider.of<Categories>(context, listen: false).items;
-        topCourses = Provider.of<Courses>(context, listen: false).topItems;
-      });
-    } catch (error) {
-      print(error);
-      const errorMsg = 'Could not refresh!';
-      CommonFunctions.showErrorDialog(errorMsg, context);
-    }
-
-    return null;
   }
 
   @override
@@ -81,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           )
         : RefreshIndicator(
-            onRefresh: refreshList,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -120,15 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 220.0,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) {
-                        return CoureGrid(
-                          id: topCourses[index].id,
-                          title: topCourses[index].title,
-                          thumbnail: topCourses[index].thumbnail,
-                          rating: topCourses[index].rating,
-                          price: topCourses[index].price,
-                        );
-                      },
+                      itemBuilder: (ctx, index) {},
                       itemCount: topCourses.length,
                     ),
                   ),
@@ -166,15 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (ctx, index) {
-                        return CategoryListItem(
-                          id: catData[index].id,
-                          title: catData[index].title,
-                          thumbnail: catData[index].thumbnail,
-                          numberOfCourses: catData[index].numberOfCourses,
-                          backgroundColor: getBackgroundColor(index),
-                        );
-                      },
                       itemCount: catData.length,
                     ),
                   ),
